@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthUrl, CLIENT_ID } from "@/lib/auth";
+import { getAuthUrl, CLIENT_ID } from "@/lib/auth-simple";
 
 export const runtime = "edge";
 

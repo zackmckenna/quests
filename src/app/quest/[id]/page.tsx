@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { verifyToken } from "@/lib/auth";
+import { decodeToken } from "@/lib/auth-simple";
 
 export const runtime = "edge";
 
@@ -69,12 +69,7 @@ export default async function QuestDetailPage({ params }: Props) {
   // Check if user is logged in
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("access_token")?.value;
-  const issuerUrl = process.env.AUTH_ISSUER_URL || "";
-
-  let user = null;
-  if (accessToken && issuerUrl) {
-    user = await verifyToken(issuerUrl, accessToken);
-  }
+  const user = accessToken ? decodeToken(accessToken) : null;
 
   return (
     <div className="space-y-6">
